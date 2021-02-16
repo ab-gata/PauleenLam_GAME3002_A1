@@ -62,15 +62,16 @@ public class BasketBallProjectile : MonoBehaviour
     {
         CalculateAngle();
 
-        m_vInitialVelocity = new Vector3(InputVelocity * Mathf.Cos(m_fAngle), InputVelocity * Mathf.Sin(m_fAngle), InputVelocity * Mathf.Cos(m_fAngle));
+        m_vInitialVelocity = new Vector3(InputVelocity * m_vAngleVector.x, InputVelocity * m_vAngleVector.y, InputVelocity * m_vAngleVector.z);
 
+        // Extra information
         m_fTime = 2f * (0f - m_vInitialVelocity.y / Physics.gravity.y);
     }
 
     void CalculateAngle()
     {
         Vector3 vAdjustedCam = cam.transform.position;
-        vAdjustedCam.y += -4;
+        vAdjustedCam.y += -5;
 
         Vector3 vHorizonal = new Vector3(0, 0, 1);
 
