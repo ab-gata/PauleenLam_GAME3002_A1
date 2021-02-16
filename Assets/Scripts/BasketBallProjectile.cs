@@ -96,7 +96,6 @@ public class BasketBallProjectile : MonoBehaviour
 
             fScore += targetObj.transform.position.z - -4;
 
-
             Debug.Log("point!");
         }
     }
