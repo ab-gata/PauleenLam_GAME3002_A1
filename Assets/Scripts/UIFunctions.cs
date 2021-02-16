@@ -10,20 +10,23 @@ public class UIFunctions : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI m_ScoreText = null;
     [SerializeField]
+    private TextMeshProUGUI m_PointsText = null;
+    [SerializeField]
     private TextMeshProUGUI m_AngleText = null;
 
 
     // UI TEXT FUNCTIONS------------------------------------------------------------------------------------
     // Callback to update the interface
-    public void OnRequestUpdateUI(float fInitVel, float fScore, float fAngle)
+    public void OnRequestUpdateUI(float fInitVel, float fPoints, float fScore, float fAngle)
     {
-        UpdateParams(fInitVel, fScore, fAngle);
+        UpdateParams(fInitVel, fPoints, fScore, fAngle);
     }
 
     // Update the interface internally
-    private void UpdateParams(float fInitVel, float fScore, float fAngle)
+    private void UpdateParams(float fInitVel, float fPoints, float fScore, float fAngle)
     {
         m_InitVelText.text = "Initial Velocity = " + fInitVel + " m/s^2";
+        m_PointsText.text = "Score = " + fPoints;
         m_ScoreText.text = "Score = " + fScore;
         m_AngleText.text = "Angle = " + fAngle + " deg";
     }

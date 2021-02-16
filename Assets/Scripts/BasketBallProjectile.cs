@@ -25,6 +25,7 @@ public class BasketBallProjectile : MonoBehaviour
 
     // Interface stuff
     private UIFunctions m_interface = null;
+    private float fPoints = 0;
     private float fScore = 0;
 
     private void Start()
@@ -51,10 +52,10 @@ public class BasketBallProjectile : MonoBehaviour
         }
 
         // Update calculations (+ landing position)
-        CalculateLaunchProperties();
         if (!m_bSimulating)
         {
             UpdateLandingPosition();
+            CalculateLaunchProperties();
         }
 
         // Start/Stop simulation
@@ -75,7 +76,7 @@ public class BasketBallProjectile : MonoBehaviour
         // Request UI update
         if (m_interface != null)
         {
-            m_interface.OnRequestUpdateUI(InputVelocity, fScore, m_fAngle * Mathf.Rad2Deg);
+            m_interface.OnRequestUpdateUI(InputVelocity, fPoints, fScore, m_fAngle * Mathf.Rad2Deg);
         }
     }
 
@@ -91,7 +92,11 @@ public class BasketBallProjectile : MonoBehaviour
     {
         if (targetObj.gameObject.tag == "Hoop")
         {
-            fScore++;
+            fPoints++;
+
+            fScore += targetObj.transform.position.z - -4;
+
+
             Debug.Log("point!");
         }
     }
@@ -104,7 +109,6 @@ public class BasketBallProjectile : MonoBehaviour
     void CalculateLaunchProperties()
     {
         CalculateAngle();
-
         m_vInitialVelocity = new Vector3(InputVelocity * m_vAngleVector.x, InputVelocity * m_vAngleVector.y, InputVelocity * m_vAngleVector.z);
 
         m_fTime = 2f * (0f - m_vInitialVelocity.y / Physics.gravity.y);
@@ -138,8 +142,6 @@ public class BasketBallProjectile : MonoBehaviour
         m_rBall.useGravity = false;
         m_rBall.velocity = new Vector3(0, 0, 0);
         m_rBall.transform.position = new Vector3(0, 1, -4);
-        Quaternion target = Quaternion.Euler(0, 0, 0);
-        m_rBall.rotation = Quaternion.Slerp(transform.rotation, target, 1);
     }
 
     // Util
