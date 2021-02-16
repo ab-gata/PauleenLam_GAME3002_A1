@@ -10,6 +10,7 @@ public class BasketBallProjectile : MonoBehaviour
 
 
     [SerializeField]
+    private float InputVelocity = 30.0f;
     private Vector3 m_vInitialVelocity = Vector3.zero;
     private Vector3 m_vAngleVector = Vector3.zero;
 
@@ -20,6 +21,7 @@ public class BasketBallProjectile : MonoBehaviour
 
 
     private bool m_bIsGrounded = true;
+    private bool m_bSimulating = false;
 
     private GameObject m_landingDisplay = null;
 
@@ -38,7 +40,16 @@ public class BasketBallProjectile : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
-            SetNewVelocity();
+            if (m_bSimulating)
+            {
+                m_bSimulating = false;
+                ResetBall();
+            }
+            else
+            {
+                m_bSimulating = true;
+                StartSimulation();
+            }
         }
     }
 
@@ -51,13 +62,15 @@ public class BasketBallProjectile : MonoBehaviour
     {
         CalculateAngle();
 
+        m_vInitialVelocity = new Vector3(InputVelocity * Mathf.Cos(m_fAngle), InputVelocity * Mathf.Sin(m_fAngle), InputVelocity * Mathf.Cos(m_fAngle));
+
         m_fTime = 2f * (0f - m_vInitialVelocity.y / Physics.gravity.y);
     }
 
     void CalculateAngle()
     {
         Vector3 vAdjustedCam = cam.transform.position;
-        vAdjustedCam.y -= -2;
+        vAdjustedCam.y += -4;
 
         Vector3 vHorizonal = new Vector3(0, 0, 1);
 
@@ -70,9 +83,17 @@ public class BasketBallProjectile : MonoBehaviour
 
         Debug.Log(theta * Mathf.Rad2Deg);
     }
-    void SetNewVelocity()
+    void StartSimulation()
     {
-        m_rBall.velocity = Multiply(m_vAngleVector, m_vInitialVelocity);
+        m_rBall.velocity = m_vInitialVelocity;
+        m_rBall.useGravity = true;
+    }
+
+    void ResetBall()
+    {
+        m_rBall.useGravity = false;
+        m_rBall.velocity = new Vector3(0, 0, 0);
+        m_rBall.transform.position = new Vector3(0, 1, -4);
     }
 
     Vector3 Multiply(Vector3 v1, Vector3 v2)

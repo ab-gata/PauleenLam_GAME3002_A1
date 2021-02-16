@@ -233,7 +233,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 155d1f9f57f0ed449912625da45852c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_vInitialVelocity: {x: 10, y: 0, z: 10}
+  cam: {fileID: 963194227}
+  InputVelocity: 15
 --- !u!54 &247127994
 Rigidbody:
   m_ObjectHideFlags: 0
