@@ -26,7 +26,7 @@ public class UIFunctions : MonoBehaviour
     private void UpdateParams(float fInitVel, float fPoints, float fScore, float fAngle)
     {
         m_InitVelText.text = "Initial Velocity = " + fInitVel + " m/s^2";
-        m_PointsText.text = "Score = " + fPoints;
+        m_PointsText.text = "Points = " + fPoints;
         m_ScoreText.text = "Score = " + fScore;
         m_AngleText.text = "Angle = " + fAngle + " deg";
     }
@@ -35,16 +35,19 @@ public class UIFunctions : MonoBehaviour
     // BUTTON FUNCTIONS-------------------------------------------------------------------------------------
     public void StartGame()
     {
+        // Assuming game scene is the first one after the start scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void GoToTitle()
     {
+        // Start scene should be 0
         SceneManager.LoadScene(0);
     }
 
     public void QuitGame()
     {
+        // Quits the game
         Debug.Log("QUIT");
         Application.Quit();
     }
